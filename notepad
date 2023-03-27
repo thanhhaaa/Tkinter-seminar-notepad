@@ -4,6 +4,7 @@ window = Tk()
 window.title("Notepad")
 window.geometry("500x300")
 
-
+mytext = Text(window)
+mytext.pack()
 
 window.mainloop()
