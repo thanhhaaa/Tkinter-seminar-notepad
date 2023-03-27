@@ -1,30 +1,8 @@
-from tkinter import *
-from tkinter import ttk
-
-window = Tk()
-window.title("Notepad")
-window.geometry("500x300")
-
-mymenubar = Menu(window) #
-window.config(menu=mymenubar)
-file_menu = Menu(mymenubar)
-edit_menu = Menu(mymenubar) #
-
-mymenubar.add_cascade(
-    label='File',
-    menu= file_menu)
-
-mymenubar.add_cascade(
-    label='Edit',
-    menu= edit_menu)
-
-
 mynotebook = ttk.Notebook(window)
 mynotebook.pack()
 
 myframe1 = ttk.Frame(mynotebook, width=500, height=300)
 myframe2 = ttk.Frame(mynotebook, width=500, height=300)
-
 myframe1.pack(fill=BOTH, expand=1)
 myframe2.pack(fill=BOTH, expand=1)
 
@@ -32,9 +10,19 @@ mynotebook.add(myframe1, text="New tab")
 mynotebook.add(myframe2, text="Second tab")
 
 mytext = Text(myframe1)
-mytext.pack()
+mytext.pack(fill=BOTH)
+
+vtc_scb = Scrollbar(mytext)
+vtc_scb.pack(side=RIGHT, fill=Y)
+hrz_scb = Scrollbar(mytext, orient='horizontal')
+hrz_scb.pack(side=BOTTOM, fill=X)
+textarea = Text(mytext, width=25, height=15, wrap=NONE, yscrollcommand=vtc_scb.set, xscrollcommand=hrz_scb.set)
+
+textarea.pack(side=TOP, fill=X)
+vtc_scb.config(command=textarea.yview)
+hrz_scb.config(command=textarea.xview)
 
 mytext2 = Text(myframe2)
-mytext.pack()
+mytext2.pack()
 
 window.mainloop()
