@@ -1,10 +1,40 @@
 from tkinter import *
+from tkinter import ttk
 
 window = Tk()
 window.title("Notepad")
 window.geometry("500x300")
 
-mytext = Text(window)
+mymenubar = Menu(window) #
+window.config(menu=mymenubar)
+file_menu = Menu(mymenubar)
+edit_menu = Menu(mymenubar) #
+
+mymenubar.add_cascade(
+    label='File',
+    menu= file_menu)
+
+mymenubar.add_cascade(
+    label='Edit',
+    menu= edit_menu)
+
+
+mynotebook = ttk.Notebook(window)
+mynotebook.pack()
+
+myframe1 = ttk.Frame(mynotebook, width=500, height=300)
+myframe2 = ttk.Frame(mynotebook, width=500, height=300)
+
+myframe1.pack(fill=BOTH, expand=1)
+myframe2.pack(fill=BOTH, expand=1)
+
+mynotebook.add(myframe1, text="New tab")
+mynotebook.add(myframe2, text="Second tab")
+
+mytext = Text(myframe1)
+mytext.pack()
+
+mytext2 = Text(myframe2)
 mytext.pack()
 
 window.mainloop()
