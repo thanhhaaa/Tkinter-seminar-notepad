@@ -1,0 +1,57 @@
+from tkinter import *
+from tkinter import ttk
+from func2 import ghiFile
+
+path = "khofile.txt"
+
+window = Tk()
+window.title("Notepad")
+window.geometry("550x325")
+
+mymenubar = Menu(window) #
+window.config(menu=mymenubar)
+file_menu = Menu(mymenubar, tearoff=False)
+edit_menu = Menu(mymenubar, tearoff=False) #
+mymenubar.add_cascade(label='File', menu= file_menu)
+mymenubar.add_cascade(label='Edit', menu= edit_menu)
+
+file_menu.add_command(label="Exit", command=window.destroy)
+
+mynotebook = ttk.Notebook(window)
+mynotebook.pack()
+
+myframe1 = ttk.Frame(mynotebook, width=500, height=300)
+myframe2 = ttk.Frame(mynotebook, width=500, height=300)
+myframe1.pack(fill=BOTH, expand=1)
+myframe2.pack(fill=BOTH, expand=1)
+
+mynotebook.add(myframe1, text="New tab")
+mynotebook.add(myframe2, text="Second tab")
+
+mytext = Text(myframe1, height=10, width=15)
+mytext.pack(fill=BOTH)
+buttonCommit = Button(myframe1, height=10, width=10, text="Save",    command=lambda: writeInput())
+# command=lambda: retrieve_input() >>> just means do this when i press the button
+buttonCommit.pack()
+
+vtc_scb = Scrollbar(mytext)
+vtc_scb.pack(side=RIGHT, fill=Y)
+hrz_scb = Scrollbar(mytext, orient='horizontal')
+hrz_scb.pack(side=BOTTOM, fill=X)
+textarea = Text(mytext, width=25, height=15, wrap=NONE, yscrollcommand=vtc_scb.set, xscrollcommand=hrz_scb.set)
+
+def writeInput():
+    inputValue = mytext.get("1.0", "end-1c")
+    ghiFile("khofile.txt", inputValue)
+    print(inputValue)
+
+textarea.pack(side=TOP, fill=X)
+vtc_scb.config(command=textarea.yview)
+hrz_scb.config(command=textarea.xview)
+
+mytext2 = Text(myframe2)
+mytext2.pack()
+
+
+mainloop()
+window.mainloop()
